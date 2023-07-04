@@ -1,6 +1,7 @@
 
 
-const audioClips=[{
+const audioClips=[
+  {
     keyCode: 81,
     keyTrigger: "Q",
     id: "Heater-1",
@@ -62,7 +63,6 @@ function App() {
   );
 }
 
-export default App;
 
 function  Pad({ clip }) {
   React.useEffect = (() => {
