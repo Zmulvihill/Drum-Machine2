@@ -1,6 +1,6 @@
 
 
-const audioClips=[
+const audioClips= [
   {
     keyCode: 81,
     keyTrigger: "Q",
@@ -49,18 +49,14 @@ const audioClips=[
 }]
 
 function App() {
-  return (
-    <div className="App">
-      <div className="text-center">
-      <header className="App-header" >
-        <h2>Drum Machine</h2>
-        {audioClips.map(clip=>{
+  return <div className="bg-info min-vh-100 text-white">
+          <div className="text-center">
+          <h2>Drum Machine</h2>
+          {audioClips.map(clip=>{
           <Pad key={clip.id} clip={clip}/>
         } )}
-      </header>
-    </div>
-    </div>
-  );
+          </div>
+         </div>
 }
 
 
