@@ -50,68 +50,74 @@ function App() {
   const [volume, setVolume] = React.useState(1);
   const [recording, setRecording] = React.useState("");
   const [speed, setSpeed] = React.useState(0.5);
+
   const playRecording = () => {
     let index = 0;
-    let recrodArray = recording.split(" ");
+    let recordArray = recording.split(" ");
     const interval = setInterval(() => {
-      const audioTag = document.getElementById(recrodArray[index]);
+      const audioTag = document.getElementById(recordArray[index]);
       audioTag.volume = volume;
       audioTag.currentTime = 0;
       audioTag.play();
       index++;
     }, speed * 600);
-    setTimeout(() => clearInterval(interval), 600 * speed * recrodArray.length - 1);
+    setTimeout(() => clearInterval(interval), 600 * speed * recordArray.length - 1);
   };
- 
+
   return (
-   <div className="bg-info min-vh-100 text-white">
+    <div className="bg-info min-vh-100 text-white">
       <div className="text-center">
         <h2>Drum Machine</h2>
-        {audioClips.map(clip=>{
-         <Pad 
-         key={clip.id} 
-         clip={clip} 
-         volume={volume} 
-         setRecording={setRecording}/>
-        } )}
-        <br/>
+        {audioClips.map((clip) => (
+          <Pad
+            key={clip.id}
+            clip={clip}
+            volume={volume}
+            setRecording={setRecording}
+          />
+        ))}
+        <br />
         <h4>Volume</h4>
-        <input 
-        type="range" 
-        steps="0.01" 
-        onChange={(e) => setVolume(e.target.value)} 
-        value={volume} 
-        max="1" 
-        min="0" 
-        className="w-50"
+        <input
+          type="range"
+          step="0.01"
+          onChange={(e) => setVolume(e.target.value)}
+          value={volume}
+          max="1"
+          min="0"
+          className="w-50"
         />
         <h3>(recording)</h3>
         {recording && (
           <>
-          <button onClick={playRecording} className="btn btn-success">play</button>
-          <button onClick={() => setRecording("")} className="btn btn-danger">clear</button>
-         <br />
-         <h4>Speed</h4>
-          <input 
-          type="range" 
-          steps="0.01" 
-          onChange={(e) => setSpeed(e.target.value)} 
-          value={speed} 
-          max="1.2" 
-          min="0.1" 
-          className="w-50"
-        />
+            <button onClick={playRecording} className="btn btn-success">
+              Play
+            </button>
+            <button onClick={() => setRecording("")} className="btn btn-danger">
+              Clear
+            </button>
+            <br />
+            <h4>Speed</h4>
+            <input
+              type="range"
+              step="0.01"
+              onChange={(e) => setSpeed(e.target.value)}
+              value={speed}
+              max="1.2"
+              min="0.1"
+              className="w-50"
+            />
+          </>
         )}
       </div>
-     </div>
- );
+    </div>
+  );
 }
 
+function Pad({ clip, volume, setRecording }) {
+  const [active, setActive] = React.useState(false);
 
-function  Pad({ clip, volume, setRecording }) {
- const [active, setActive] = React.useState(false);
- 
-  React.useEffect = (() => {
+  React.useEffect(() => {
     document.addEventListener("keydown", handleKeyPress);
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
@@ -119,7 +125,7 @@ function  Pad({ clip, volume, setRecording }) {
   });
 
   const handleKeyPress = (e) => {
-    if (e.keyCode === clip.keycode) {
+    if (e.keyCode === clip.keyCode) {
       playSound();
     }
   };
@@ -131,15 +137,15 @@ function  Pad({ clip, volume, setRecording }) {
     audioTag.volume = volume;
     audioTag.currentTime = 0;
     audioTag.play();
-    setRecording((prev) => prev + clip.keyTrigger + "");
-};
+    setRecording((prev) => prev + clip.keyTrigger + " ");
+  };
 
   return (
-        <div onClick={playSound} className= "btn btn-secondary p-4 m-3">
-          <audio className="clip" id={clip.keyTrigger} src={clip.url} />
-          {clip.keyTrigger}
-        </div>
+    <div onClick={playSound} className="btn btn-secondary p-4 m-3">
+      <audio className="clip" id={clip.keyTrigger}src={clip.url} />
+      {clip.keyTrigger}
+    </div>
   );
 }
 
-ReactDom.render(<App/>, document.getElementById("root"))
+ReactDOM.render(<App />, document.getElementById("root"));
